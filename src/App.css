@@ -14,7 +14,7 @@
 }
 
 .App-header {
-  background-color: #282c34;
+  background-color: grey;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -35,4 +35,34 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+
+.job-post {
+  background-color: black;
+  color: cornsilk;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  width: 30em;
+  font-size: 1em;
+}
+
+.job-details {
+  display: flex;
+  flex-direction: row;
+  font-size: small;
+  justify-content: space-between;
+  margin-top: 5px;
+  padding-bottom: 5px;
+}
+
+.job-detail {
+  margin-left: 3px;
+  margin-right: 3px;
+  width: 20em;
+  background-color: #282c34;
+  border-radius: 10px;
+  height: 2em;
+  text-align: center;
+  vertical-align: middle;
 }
