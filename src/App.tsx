@@ -60,12 +60,34 @@ function App() {
   let [currentCity, setCurrentCity] = useState("Any City");
   let [currentDepartment, setCurrentDepartment] = useState("Any Department");
 
+  const getCities = (postings: JobPosting[]): Set<string> => {
+    const rawLocations = postings
+      .map(post => post.categories.location)
+      .sort();
+    return new Set(rawLocations);
+  };
+
+  const getDepartments = (postings: JobPosting[]): Set<string> => {
+    const rawDepts = postings
+      .map(post => post.categories.department)
+      .sort();
+    return new Set(rawDepts);
+  };
+
   useEffect(() => {
     const api = new JobPostingApi();
     api.getPostings().then(x => {
-      setPostings(x);
-      setCities(new Set(x.map(y => y.categories.location).sort()));
-      setDepartments(new Set(x.map(y => y.categories.department).sort()));
+      const postings = x.map(job => {
+        if (!job.categories.department) {
+          job.categories.department = "[None]";
+        }
+
+        return job;
+      });
+
+      setPostings(postings);
+      setCities(getCities(postings));
+      setDepartments(getDepartments(postings));
     });
   }, []);
 
@@ -82,23 +104,29 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <select value={currentCity}
-          onChange={e => setCurrentCity(e.target.value)}>
-            <option value="Any City">Any City</option>
-            {[...cities].map((city, idx) => (
-              <option key={idx} value={city}>{city}</option>
-            ))}
-        </select>
-        <select value={currentDepartment}
-          onChange={e => setCurrentDepartment(e.target.value)}>
-            <option value="Any Department">Any Department</option>
-            {[...departments].map((dep, idx) => (
-              <option key={idx} value={dep}>{dep}</option>
-            ))}
-        </select>
-        { postings.filter(filterPost).map((job, idx) => {
-          return (<JobPost key={idx} post={job} />);
-        }) }
+        <div className="filter-row">
+          <select value={currentCity}
+            onChange={e => setCurrentCity(e.target.value)}
+            className="filter-box">
+              <option value="Any City">Any City</option>
+              {[...cities].map((city, idx) => (
+                <option key={idx} value={city}>{city}</option>
+              ))}
+          </select>
+          <select value={currentDepartment}
+            onChange={e => setCurrentDepartment(e.target.value)}
+            className="filter-box">
+              <option value="Any Department">Any Department</option>
+              {[...departments].map((dep, idx) => (
+                <option key={idx} value={dep}>{dep}</option>
+              ))}
+          </select>
+        </div>
+        <div className="post-container">
+          { postings.filter(filterPost).map((job, idx) => {
+            return (<JobPost key={idx} post={job} />);
+          }) }
+        </div>
       </header>
     </div>
   );
