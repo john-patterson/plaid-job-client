@@ -10,7 +10,6 @@
 }
 
 .job-post {
-  background-color: black;
   color: cornsilk;
   margin-top: 10px;
   margin-bottom: 10px;
@@ -19,6 +18,14 @@
   border-radius: 10px;
   display: flex;
   flex-direction: column;
+}
+
+.job-post:nth-child(even) {
+  background-color: rgb(29, 29, 29);
+}
+
+.job-post:nth-child(odd) {
+  background-color: rgb(29, 29, 29);
 }
 
 .job-details {
@@ -34,12 +41,10 @@
   margin-left: 3px;
   margin-right: 3px;
   width: 20em;
-  background-color: #282c34;
   border-radius: 10px;
   text-align: center;
   vertical-align: middle;
 }
-
 
 .filter-row {
   display: flex;
@@ -57,7 +62,13 @@
   display: block;
   text-align: center;
   font-size: small;
-  background-color:forestgreen;
+  background-color:rgb(48, 79, 97);
   color: cornsilk;
   text-decoration: none;
+}
+
+.post-container {
+  background-color: black;
+  border-radius: 10px;
+  margin-top: 10px;
 }

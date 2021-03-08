@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { ReactElement, useState } from 'react';
 import { JobPosting } from '../sdk/JobPostingApi';
-import ReactHtmlParser from 'react-html-parser';
+import ReactHtmlParser, { convertNodeToElement } from 'react-html-parser';
 
 import './JobApplyPage.css';
 import { Redirect } from 'react-router';
@@ -71,36 +71,71 @@ function JobApplicationForm(props: IJobApplyPageProps): JSX.Element {
   );
 }
 
+const parse = (input: string): React.ReactElement[] => {
+  const transformFn = (node: Node, index: number): ReactElement | void | null => {
+    const dangerousNode = node as any;
+    if (dangerousNode && dangerousNode.attribs && dangerousNode.attribs.style) {
+      dangerousNode.attribs.style = "";
+    }
+    return convertNodeToElement(node, index, transformFn);
+  };
+  return ReactHtmlParser(input, {
+    transform: transformFn
+  });
+};
+
 export default function JobApplyPage(props: IJobApplyPageProps): JSX.Element {
   return (
-    <div>
-      <h1>{props.post.text} ({props.post.categories.commitment})</h1>
-      <div>{ReactHtmlParser(props.post.additional)}</div>
-      <h2>Classification</h2>
-      <div className="job-categories">
-        <div>Location: {props.post.categories.location}</div>
-        <div>Department: {props.post.categories.department}</div>
-        <div>Team: {props.post.categories.team}</div>
+    <div className="job-application-page">
+      <div className="job-application-container">
+        <h1>{props.post.text}</h1>
+        <div className="job-classification">
+          <h2>Classification</h2>
+          <div className="blurb-body job-categories">
+            <label>Location</label>
+            <span>{props.post.categories.location}</span>
+            <label>Department</label>
+            <span>{props.post.categories.department}</span>
+            <label>Team</label>
+            <span>{props.post.categories.team}</span>
+            <label>Commitment</label>
+            <span>{props.post.categories.commitment}</span>
+          </div>
+        </div>
+        <div className="job-inclusion-statement">
+          <h2>Mission Statement</h2>
+          <div className="blurb-body">
+            {parse(props.post.additional)}
+          </div>
+        </div>
+        <div className="job-description">
+          <h2>Description</h2>
+          <div className="blurb-body">
+            {parse(props.post.description)}
+          </div>
+        </div>
+        <div className="job-requirements">
+          <h2>Role Requirements</h2>
+          <div className="blurb-body">
+            { props.post.lists.map((ls, idx) => {
+              return (
+                <div key={idx}>
+                  <h3>{ls.text}</h3>
+                  <div>
+                    {parse(ls.content)}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+        <div className="job-app-form">
+          <h2>Join Us</h2>
+          <div className="blurb-body">
+          <JobApplicationForm post={props.post} />
+          </div>
+        </div>
       </div>
-      <h2>Description</h2>
-      <div className="job-description">
-        {ReactHtmlParser(props.post.description)}
-      </div>
-      <h2>Role Requirements</h2>
-      <div className="job-requirements">
-        { props.post.lists.map((ls, idx) => {
-          return (
-            <div key={idx}>
-              <h3>{ls.text}</h3>
-              <div>
-                {ReactHtmlParser(ls.content)}
-              </div>
-            </div>
-          );
-        })}
-      </div>
-      <h2>Join Us</h2>
-      <JobApplicationForm post={props.post} />
     </div>
   );
 }

@@ -20,3 +20,79 @@
     text-align: right;
     justify-content: right;
 }
+
+.job-categories {
+    display: grid;
+    grid-template-columns: max-content max-content;
+    background-color: black;
+    border-radius: 10px;
+    padding: 5px;
+    justify-content: center;
+}
+
+.job-categories label {
+    text-align: left;
+}
+
+.job-categories label:after {
+    content: ":";
+}
+
+.job-categories span {
+    text-align: right;
+    justify-content: right;
+}
+
+.job-application-page {
+  background-color: grey;
+  display: flex;
+  justify-content: center;
+}
+
+.job-application-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  
+  font-size: calc(10px + 2vmin);
+  color: cornsilk;
+  vertical-align: top;
+  width: 50%;
+  padding: 5px;
+  background-color: black;
+}
+
+.job-application-container > div {
+    margin-bottom: 5px;
+    margin-top: 5px;
+    padding: 10px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.blurb-body {
+    background-color: rgb(8, 8, 8);
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.blurb-body li {
+    font-size: calc(10px + 1vmin);
+    list-style-type: disc;
+    list-style-position: inside;
+    text-indent: -2em;
+    padding-left: 2em;
+}
+
+.job-application-container > div h2 {
+    margin-bottom: 5px;
+    margin-top: 5px;
+    background-color: rgb(29, 29, 29);
+    border-radius: 10px;
+    text-align: center;
+}
+
+.job-inclusion-statement > div a {
+    color:cornflowerblue;
+}
