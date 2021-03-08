@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/john-patterson/plaid-job-client/static/css/main.16c5b9f5.chunk.css",
+    "main.js": "/john-patterson/plaid-job-client/static/js/main.03908ac4.chunk.js",
+    "main.js.map": "/john-patterson/plaid-job-client/static/js/main.03908ac4.chunk.js.map",
+    "runtime-main.js": "/john-patterson/plaid-job-client/static/js/runtime-main.cd9cbb3e.js",
+    "runtime-main.js.map": "/john-patterson/plaid-job-client/static/js/runtime-main.cd9cbb3e.js.map",
+    "static/js/2.e7f8002c.chunk.js": "/john-patterson/plaid-job-client/static/js/2.e7f8002c.chunk.js",
+    "static/js/2.e7f8002c.chunk.js.map": "/john-patterson/plaid-job-client/static/js/2.e7f8002c.chunk.js.map",
+    "static/js/3.42c50c06.chunk.js": "/john-patterson/plaid-job-client/static/js/3.42c50c06.chunk.js",
+    "static/js/3.42c50c06.chunk.js.map": "/john-patterson/plaid-job-client/static/js/3.42c50c06.chunk.js.map",
+    "index.html": "/john-patterson/plaid-job-client/index.html",
+    "static/css/main.16c5b9f5.chunk.css.map": "/john-patterson/plaid-job-client/static/css/main.16c5b9f5.chunk.css.map",
+    "static/js/2.e7f8002c.chunk.js.LICENSE.txt": "/john-patterson/plaid-job-client/static/js/2.e7f8002c.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.cd9cbb3e.js",
+    "static/js/2.e7f8002c.chunk.js",
+    "static/css/main.16c5b9f5.chunk.css",
+    "static/js/main.03908ac4.chunk.js"
+  ]
+}
