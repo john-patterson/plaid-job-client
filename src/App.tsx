@@ -7,19 +7,7 @@ import {
   Switch,
 } from "react-router-dom";
 import JobPostingApi, { JobPosting } from './sdk/JobPostingApi';
-
-interface IJobApplyPageProps {
-  post: JobPosting;
-}
-
-function JobApplyPage(props: IJobApplyPageProps): JSX.Element {
-  return (
-    <div>
-      <h1>{props.post.text}</h1>
-      <p>{props.post.additional}</p>
-    </div>
-  );
-}
+import JobApplyPage from './pages/JobApplyPage';
 
 function App() {
   let [postings, setPostings] = useState([] as JobPosting[]);
