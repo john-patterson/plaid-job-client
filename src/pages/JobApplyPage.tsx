@@ -25,6 +25,8 @@ function JobApplicationForm(props: IJobApplyPageProps): JSX.Element {
   const [favoriteCandy, setFavoriteCandy] = useState<string | undefined>(undefined);
   const [superpower, setSuperpower] = useState<string | undefined>(undefined);
 
+  const [errorMessage, setErrorMessage] = useState<string | undefined>(undefined);
+
   const createFormObject = (): JobRequest => ({
     job_id: jobId,
     name,
@@ -46,6 +48,13 @@ function JobApplicationForm(props: IJobApplyPageProps): JSX.Element {
     setRedirect(true);
   };
 
+  const canSubmit = (): boolean => {
+    return name !== ""
+      && email !== ""
+      && resumeUrl !== ""
+      && phone !== "";
+  };
+
   if (redirect) {
     return (<Redirect to="/success" />);
   }
@@ -53,6 +62,7 @@ function JobApplicationForm(props: IJobApplyPageProps): JSX.Element {
   return (
     <form onSubmit={handleSubmit}>
       <div className="job-application">
+        <div className="error-box">{errorMessage}</div>
         <div className="form-data">
           <TextInput label="Name" onChanged={setName} required={true} />
           <TextInput label="Email" onChanged={setEmail} required={true} type="email" />
@@ -67,7 +77,7 @@ function JobApplicationForm(props: IJobApplyPageProps): JSX.Element {
           <TextInput label="Superpower" onChanged={setSuperpower} type="text" />
         </div>
 
-        <input className="form-submit" type="submit" value="Submit" />
+        <input className="form-submit" type="submit" value="Submit" disabled={!canSubmit()} />
       </div>
     </form>
   );

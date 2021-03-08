@@ -20,7 +20,10 @@
     background-color: rgb(48, 79, 97);
     border: 0;
     border-radius: 10px;
-    
+}
+
+.form-submit:disabled {
+    background-color: grey;
 }
 
 .form-data label {
