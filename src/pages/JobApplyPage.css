@@ -1,0 +1,22 @@
+.form-data {
+    display: grid;
+    grid-template-columns: max-content max-content;
+    grid-gap: 5px;
+}
+
+.form-data label {
+    text-align: left;
+}
+
+.form-data label:after {
+    content: ":";
+}
+
+.form-data label.required:after {
+    content: "*:";
+}
+
+.form-data input {
+    text-align: right;
+    justify-content: right;
+}
