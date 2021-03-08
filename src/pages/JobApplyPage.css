@@ -1,7 +1,26 @@
 .form-data {
     display: grid;
-    grid-template-columns: max-content max-content;
+    grid-template-columns: max-content 70%;
     grid-gap: 5px;
+    justify-content: center;
+}
+
+.job-application {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.form-submit {
+    margin-top: 15px;
+    width: 80%;
+    margin-left: 10%;
+    height: 2em;
+    color: cornsilk;
+    background-color: rgb(48, 79, 97);
+    border: 0;
+    border-radius: 10px;
+    
 }
 
 .form-data label {

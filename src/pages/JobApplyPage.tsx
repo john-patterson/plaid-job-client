@@ -51,22 +51,24 @@ function JobApplicationForm(props: IJobApplyPageProps): JSX.Element {
   }
 
   return (
-    <form className="job-application" onSubmit={handleSubmit}>
-      <div className="form-data">
-        <TextInput label="Name" onChanged={setName} required={true} />
-        <TextInput label="Email" onChanged={setEmail} required={true} type="email" />
-        <TextInput label="Resume URL" onChanged={setResumeUrl} required={true} type="url" />
-        <TextInput label="Phone" onChanged={setPhone} required={true} type="tel" />
+    <form onSubmit={handleSubmit}>
+      <div className="job-application">
+        <div className="form-data">
+          <TextInput label="Name" onChanged={setName} required={true} />
+          <TextInput label="Email" onChanged={setEmail} required={true} type="email" />
+          <TextInput label="Resume URL" onChanged={setResumeUrl} required={true} type="url" />
+          <TextInput label="Phone" onChanged={setPhone} required={true} type="tel" />
 
-        <TextInput label="Github" onChanged={setGithub} type="url" />
-        <TextInput label="Twitter" onChanged={setTwitter} type="url" />
-        <TextInput label="Website" onChanged={setWebsite} type="url" />
-        <TextInput label="Location" onChanged={setLocation} type="text" />
-        <TextInput label="Favorite Candy" onChanged={setFavoriteCandy} type="text" />
-        <TextInput label="Superpower" onChanged={setSuperpower} type="text" />
+          <TextInput label="Github" onChanged={setGithub} type="url" />
+          <TextInput label="Twitter" onChanged={setTwitter} type="url" />
+          <TextInput label="Website" onChanged={setWebsite} type="url" />
+          <TextInput label="Location" onChanged={setLocation} type="text" />
+          <TextInput label="Favorite Candy" onChanged={setFavoriteCandy} type="text" />
+          <TextInput label="Superpower" onChanged={setSuperpower} type="text" />
+        </div>
+
+        <input className="form-submit" type="submit" value="Submit" />
       </div>
-
-      <input type="submit" value="Submit" />
     </form>
   );
 }
