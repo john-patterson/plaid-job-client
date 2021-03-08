@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Redirect } from "react-router-dom";
 
+import './SuccessPage.css';
+
 export function SuccessPage() {
   const [seconds, setSeconds] = useState(5);
   const [redirect, setRedirect] = useState(false);
@@ -10,20 +12,22 @@ export function SuccessPage() {
     const interval = setInterval(update, 1000);
 
     return () => {
-      if (seconds <= 0) {
+      if (seconds <= 0 || redirect) {
         clearInterval(interval);
         setRedirect(true);
       }
     };
-  }, [seconds, setSeconds]);
+  }, [redirect, seconds, setSeconds]);
 
   if (redirect) {
     return (<Redirect to="/" />);
   }
 
   return (
-    <div>
-      Success! Redirecting in {seconds} seconds.
+    <div className="page-container">
+      <div className="success-box">
+        Success! Redirecting in <span>{seconds}</span> seconds.
+      </div>
     </div>
   );
 }
