@@ -3,6 +3,7 @@ import logo from './logo.svg';
 import './App.css';
 import axios from 'axios';
 import jobData from './job-data.json';
+import FilterBox from './FilterBox';
 
 const jobsUrl = "https://api.lever.co/v0/postings/plaid?mode=json"
 interface JobPosting {
@@ -29,8 +30,6 @@ interface JobRequirements {
     text: string;
 }
 
-
-
 function JobPost(props: { post: JobPosting }) {
   const { post } = props;
   return (
@@ -42,7 +41,6 @@ function JobPost(props: { post: JobPosting }) {
         <div className="job-detail job-team">{post.categories.team}</div>
       </div>
     </div>
-
   );
 }
 
@@ -51,14 +49,22 @@ class JobPostingApi {
     return Promise.resolve(jobData.map(x => x as JobPosting));
   }
 }
-//axios.get<JobPosting[]>(jobsUrl)
+
+export interface IFilterBoxProps {
+  options: string[];
+  onChanged: (value: string) => void;
+  default?: string;
+  unfilteredValue?: string;
+}
 
 function App() {
+  const unfilteredCity = "Any City";
+  const unfilteredDepartment = "Any Department";
   let [postings, setPostings] = useState([] as JobPosting[]);
   let [cities, setCities] = useState(new Set<string>());
   let [departments, setDepartments] = useState(new Set<string>());
-  let [currentCity, setCurrentCity] = useState("Any City");
-  let [currentDepartment, setCurrentDepartment] = useState("Any Department");
+  let [currentCity, setCurrentCity] = useState(unfilteredCity);
+  let [currentDepartment, setCurrentDepartment] = useState(unfilteredDepartment);
 
   const getCities = (postings: JobPosting[]): Set<string> => {
     const rawLocations = postings
@@ -105,22 +111,14 @@ function App() {
     <div className="App">
       <header className="App-header">
         <div className="filter-row">
-          <select value={currentCity}
-            onChange={e => setCurrentCity(e.target.value)}
-            className="filter-box">
-              <option value="Any City">Any City</option>
-              {[...cities].map((city, idx) => (
-                <option key={idx} value={city}>{city}</option>
-              ))}
-          </select>
-          <select value={currentDepartment}
-            onChange={e => setCurrentDepartment(e.target.value)}
-            className="filter-box">
-              <option value="Any Department">Any Department</option>
-              {[...departments].map((dep, idx) => (
-                <option key={idx} value={dep}>{dep}</option>
-              ))}
-          </select>
+          <FilterBox options={[...cities]}
+            onChanged={setCurrentCity}
+            default={unfilteredCity}
+            unfilteredValue={unfilteredCity} />
+          <FilterBox options={[...departments]}
+            onChanged={setCurrentDepartment}
+            default={unfilteredDepartment}
+            unfilteredValue={unfilteredDepartment} />
         </div>
         <div className="post-container">
           { postings.filter(filterPost).map((job, idx) => {
