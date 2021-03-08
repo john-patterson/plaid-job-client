@@ -1,6 +1,6 @@
 import jobData from './job-data.json';
 
-const jobsUrl = "https://api.lever.co/v0/postings/plaid?mode=json"
+// const jobsUrl = "https://api.lever.co/v0/postings/plaid?mode=json"
 export interface JobPosting {
     additional: string; // Text on company values, typically non-discrimination disclaimer.
     applyUrl: string; // URL to apply page.

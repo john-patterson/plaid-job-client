@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import FilterBox from '../components/FilterBox';
 import JobPostingApi, { JobPosting } from '../sdk/JobPostingApi';
 
@@ -14,6 +15,10 @@ function JobPost(props: { post: JobPosting }) {
         <div className="job-detail job-department">{post.categories.department}</div>
         <div className="job-detail job-team">{post.categories.team}</div>
       </div>
+      <Link className="job-apply-btn"
+          to={{pathname: "/apply", search: `?jobId=${post.id}`, state: { post: post }}}>
+        Apply Now
+      </Link>
     </div>
   );
 }
