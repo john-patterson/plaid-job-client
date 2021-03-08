@@ -5,6 +5,19 @@
     justify-content: center;
 }
 
+.form-error {
+    background-color: crimson;
+    color: black;
+    border-radius: 10px;
+    padding: 5px;
+    margin: 5px;
+    text-align: center;
+}
+
+.error-message {
+    font-size: small;
+}
+
 .job-application {
     display: flex;
     flex-direction: column;

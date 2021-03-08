@@ -5,10 +5,16 @@ import ReactHtmlParser, { convertNodeToElement } from 'react-html-parser';
 import './JobApplyPage.css';
 import { Redirect } from 'react-router';
 import TextInput from '../components/TextInput';
-import { JobRequest } from '../sdk/JobApplyApi';
+import { IJobApplicationApi, JobRequest } from '../sdk/JobApplyApi';
 
 export interface IJobApplyPageProps {
   post: JobPosting;
+  applyApi: IJobApplicationApi;
+}
+
+interface SubmissionError {
+  code: number;
+  message: string;
 }
 
 function JobApplicationForm(props: IJobApplyPageProps): JSX.Element {
@@ -25,7 +31,7 @@ function JobApplicationForm(props: IJobApplyPageProps): JSX.Element {
   const [favoriteCandy, setFavoriteCandy] = useState<string | undefined>(undefined);
   const [superpower, setSuperpower] = useState<string | undefined>(undefined);
 
-  const [errorMessage, setErrorMessage] = useState<string | undefined>(undefined);
+  const [errorMessage, setErrorMessage] = useState<SubmissionError | undefined>(undefined);
 
   const createFormObject = (): JobRequest => ({
     job_id: jobId,
@@ -44,8 +50,17 @@ function JobApplicationForm(props: IJobApplyPageProps): JSX.Element {
  
   const [redirect, setRedirect] = useState(false);
   const handleSubmit = (): void => {
-    console.log(JSON.stringify(createFormObject()));
-    setRedirect(true);
+    const application = createFormObject();
+    props.applyApi.apply(application)
+      .then(response => {
+        if (response.status === 200) {
+          setErrorMessage(undefined);
+          setRedirect(true);
+        } else {
+          setErrorMessage({ code: response.status, message: response.statusText });
+          setRedirect(false);
+        }
+      });
   };
 
   const canSubmit = (): boolean => {
@@ -62,7 +77,16 @@ function JobApplicationForm(props: IJobApplyPageProps): JSX.Element {
   return (
     <form onSubmit={handleSubmit}>
       <div className="job-application">
-        <div className="error-box">{errorMessage}</div>
+        { 
+          errorMessage !== undefined
+          ? (
+              <div className="form-error">
+                <div className="error-code">Error Code {errorMessage.code}</div>
+                <div className="error-message">{errorMessage.message}</div>
+              </div>
+            )
+          : (<></>)
+        }
         <div className="form-data">
           <TextInput label="Name" onChanged={setName} required={true} />
           <TextInput label="Email" onChanged={setEmail} required={true} type="email" />
@@ -144,7 +168,7 @@ export default function JobApplyPage(props: IJobApplyPageProps): JSX.Element {
         <div className="job-app-form">
           <h2>Join Us</h2>
           <div className="blurb-body">
-          <JobApplicationForm post={props.post} />
+          <JobApplicationForm post={props.post} applyApi={props.applyApi} />
           </div>
         </div>
       </div>

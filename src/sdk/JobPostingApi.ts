@@ -1,6 +1,6 @@
+import axios, { AxiosResponse } from 'axios';
 import jobData from './job-data.json';
 
-// const jobsUrl = "https://api.lever.co/v0/postings/plaid?mode=json"
 export interface JobPosting {
     additional: string; // Text on company values, typically non-discrimination disclaimer.
     applyUrl: string; // URL to apply page.
@@ -24,9 +24,34 @@ export interface JobRequirements {
     content: string;
     text: string;
 }
+export interface IJobPostingApi {
+  getPostings(): Promise<JobPosting[]>;
+}
 
-export default class JobPostingApi {
+const cleanPostings = (postings: JobPosting[]): JobPosting[] => {
+  return postings.map(post => {
+    if (!post.categories.department) {
+      return {...post, categories: {...post.categories, department: "[None]"}};
+    } else {
+      return post;
+    }
+  });
+};
+
+export class ActualJobPostingApi implements IJobPostingApi {
+  private readonly jobsUrl = "https://api.lever.co/v0/postings/plaid?mode=json";
+
   getPostings(): Promise<JobPosting[]> {
-    return Promise.resolve(jobData.map(x => x as JobPosting));
+    return axios.get(this.jobsUrl)
+      .then((response: AxiosResponse<JobPosting[]>) => {
+        return cleanPostings(response.data);
+      });
+  }
+}
+
+export class MockJobPostingApi implements IJobPostingApi {
+  getPostings(): Promise<JobPosting[]> {
+    return Promise.resolve(jobData.map(x => x as JobPosting))
+      .then(cleanPostings);
   }
 }
