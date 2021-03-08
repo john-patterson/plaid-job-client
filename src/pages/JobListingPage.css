@@ -17,6 +17,8 @@
   width: 30em;
   font-size: 1em;
   border-radius: 10px;
+  display: flex;
+  flex-direction: column;
 }
 
 .job-details {
@@ -34,7 +36,6 @@
   width: 20em;
   background-color: #282c34;
   border-radius: 10px;
-  height: 2em;
   text-align: center;
   vertical-align: middle;
 }
@@ -45,4 +46,18 @@
   flex-direction: row;
   justify-content: space-between;
   margin-top: 10px;
+}
+
+.job-apply-btn {
+  margin-left: 3px;
+  margin-right: 3px;
+  margin-bottom: 3px;
+  break-after: page;
+  border-radius: 10px;
+  display: block;
+  text-align: center;
+  font-size: small;
+  background-color:forestgreen;
+  color: cornsilk;
+  text-decoration: none;
 }
