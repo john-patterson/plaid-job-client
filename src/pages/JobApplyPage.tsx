@@ -3,7 +3,7 @@ import { JobPosting } from '../sdk/JobPostingApi';
 import ReactHtmlParser from 'react-html-parser';
 
 import './JobApplyPage.css';
-import { useHistory } from 'react-router';
+import { Redirect } from 'react-router';
 
 export interface IJobApplyPageProps {
   post: JobPosting;
@@ -84,12 +84,16 @@ function JobApplicationForm(props: IJobApplyPageProps): JSX.Element {
     superpower
   });
 
-  const history = useHistory();
-  
+ 
+  const [redirect, setRedirect] = useState(false);
   const handleSubmit = (): void => {
     console.log(JSON.stringify(createFormObject()));
-    history.push('/');
+    setRedirect(true);
   };
+
+  if (redirect) {
+    return (<Redirect to="/success" />);
+  }
 
   return (
     <form className="job-application" onSubmit={handleSubmit}>

@@ -8,6 +8,7 @@ import {
 } from "react-router-dom";
 import JobPostingApi, { JobPosting } from './sdk/JobPostingApi';
 import JobApplyPage from './pages/JobApplyPage';
+import { SuccessPage } from './pages/SuccessPage';
 
 function App() {
   let [postings, setPostings] = useState([] as JobPosting[]);
@@ -32,6 +33,9 @@ function App() {
       <Switch>
         <Route exact path="/">
           <JobListingPage postings={postings} />
+        </Route>
+        <Route exact path="/success">
+          <SuccessPage />
         </Route>
         <Route exact path="/apply/:id" render={(props) => {
             const post = postings.find(p => p.id === props.match.params.id);
