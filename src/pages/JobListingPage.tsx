@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import FilterBox from '../components/FilterBox';
-import JobPostingApi, { JobPosting } from '../sdk/JobPostingApi';
+import { JobPosting } from '../sdk/JobPostingApi';
 
 import './JobListingPage.css';
 
@@ -16,19 +16,20 @@ function JobPost(props: { post: JobPosting }) {
         <div className="job-detail job-team">{post.categories.team}</div>
       </div>
       <Link className="job-apply-btn"
-          to={{pathname: "/apply", search: `?jobId=${post.id}`, state: { post: post }}}>
+          to={{pathname: `/apply/${post.id}`, state: { post: post }}}>
         Apply Now
       </Link>
     </div>
   );
 }
 
-export default function JobListingPage(): JSX.Element {
+export interface IJobListingPage {
+  postings: JobPosting[];
+}
+
+export default function JobListingPage(props: IJobListingPage): JSX.Element {
   const unfilteredCity = "Any City";
   const unfilteredDepartment = "Any Department";
-  let [postings, setPostings] = useState([] as JobPosting[]);
-  let [cities, setCities] = useState(new Set<string>());
-  let [departments, setDepartments] = useState(new Set<string>());
   let [currentCity, setCurrentCity] = useState(unfilteredCity);
   let [currentDepartment, setCurrentDepartment] = useState(unfilteredDepartment);
 
@@ -46,27 +47,14 @@ export default function JobListingPage(): JSX.Element {
     return new Set(rawDepts);
   };
 
-  useEffect(() => {
-    const api = new JobPostingApi();
-    api.getPostings().then(x => {
-      const postings = x.map(job => {
-        if (!job.categories.department) {
-          job.categories.department = "[None]";
-        }
-
-        return job;
-      });
-
-      setPostings(postings);
-      setCities(getCities(postings));
-      setDepartments(getDepartments(postings));
-    });
-  }, []);
+  const { postings } = props;
+  const cities = getCities(postings);
+  const departments = getDepartments(postings);
 
   const filterPost = (post: JobPosting): boolean => {
-    if (currentCity !== "Any City" && currentCity !== post.categories.location) {
+    if (currentCity !== unfilteredCity && currentCity !== post.categories.location) {
       return false;
-    } else if (currentDepartment !== "Any Department" && currentDepartment !== post.categories.department) {
+    } else if (currentDepartment !== unfilteredDepartment && currentDepartment !== post.categories.department) {
       return false;
     } else {
       return true;
