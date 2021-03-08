@@ -4,56 +4,11 @@ import ReactHtmlParser from 'react-html-parser';
 
 import './JobApplyPage.css';
 import { Redirect } from 'react-router';
+import TextInput from '../components/TextInput';
+import { JobRequest } from '../sdk/JobApplyApi';
 
 export interface IJobApplyPageProps {
   post: JobPosting;
-}
-
-
-interface JobRequest {
-    name: string;
-    email: string;
-    resume: string;
-    phone: string;
-    job_id: string;
-
-    // Optional attributes
-    github?: string;
-    twitter?: string;
-    website?: string;
-    location?: string;
-    favorite_candy?: string;
-    superpower?: string;
-}
-
-
-type InputType = "text" | "email" | "url" | "tel";
-
-interface ITextInputProps {
-  label: string;
-  onChanged: (value: string) => void;
-  required?: boolean;
-  initialValue?: string;
-  type?: InputType;
-}
-
-function TextInput(props: ITextInputProps): JSX.Element {
-  const [currentValue, setCurrentValue] = useState(props.initialValue ?? "");
-
-  const updateValue = (event: React.ChangeEvent<HTMLInputElement>): void => {
-    const value = event.target.value;
-    props.onChanged(value);
-    setCurrentValue(value);
-  };
-
-  return (
-    <>
-      <label className={props.required ? "required" : ""}>
-        {props.label}
-      </label>
-      <input type={props.type ?? "text"} onChange={updateValue} value={currentValue} />
-    </>
-  );
 }
 
 function JobApplicationForm(props: IJobApplyPageProps): JSX.Element {
