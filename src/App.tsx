@@ -3,7 +3,7 @@ import './App.css';
 import JobListingPage from './pages/JobListingPage';
 import {
   Route,
-  BrowserRouter as Router,
+  HashRouter as Router,
   Switch,
 } from "react-router-dom";
 import JobPostingApi, { JobPosting } from './sdk/JobPostingApi';

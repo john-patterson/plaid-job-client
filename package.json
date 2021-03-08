@@ -1,6 +1,6 @@
 {
   "name": "plaid-job-client",
-  "homepage": "http://johnppatterson.com/plaid-job-client",
+  "homepage": ".",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
